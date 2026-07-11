@@ -1,0 +1,2708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Family Record Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#3730A9;
+    --indigo-dark:#241D6E;
+    --coral:#FF6F61;
+    --teal:#14B8A6;
+    --gold:#FBBF24;
+    --bg:#FAF9FF;
+    --card:#FFFFFF;
+    --ink:#1F1B3A;
+    --ink-soft:#5B5578;
+    --line:#E4DFF5;
+    --shadow: 0 10px 30px rgba(55,48,169,0.10);
+
+    /* profiles book palette */
+    --pb-bg:#EDE4CE;
+    --pb-card:#FBF7EC;
+    --pb-ink:#231C15;
+    --pb-muted:#8A7F68;
+    --pb-line:#DCD0B0;
+    --pb-gold:#B08A34;
+    --pb-gold-deep:#8C6A24;
+    --pb-maroon:#7A2140;
+    --pb-black:#211C16;
+    --pb-teal:#1F4B43;
+    --pb-brown:#8B6A2F;
+    --pb-rose:#8C2350;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--indigo-dark);
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- decorative blobs ---------- */
+  .blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55;pointer-events:none;}
+
+  /* ---------- top navigation ---------- */
+  nav.tabbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:6px;
+    background:rgba(250,249,255,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:2px solid var(--line);
+    padding:14px 24px;
+  }
+  nav.tabbar .brand{
+    font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.05rem;
+    color:var(--indigo);margin-right:auto;display:flex;align-items:center;gap:8px;
+  }
+  nav.tabbar .brand span.dot{width:10px;height:10px;border-radius:50%;background:var(--coral);display:inline-block;}
+  .tab-btn{
+    font-family:'Work Sans',sans-serif;font-weight:600;font-size:.88rem;
+    background:transparent;border:none;color:var(--ink-soft);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s;
+  }
+  .tab-btn:hover{background:#EFEBFB;color:var(--indigo);}
+  .tab-btn.active{background:var(--indigo);color:#fff;}
+  .print-btn{
+    font-family:'Work Sans',sans-serif;font-weight:700;font-size:.85rem;
+    background:var(--coral);color:#fff;border:none;
+    padding:10px 18px;border-radius:999px;cursor:pointer;
+    box-shadow:0 6px 16px rgba(255,111,97,.35);
+  }
+  .print-btn:hover{filter:brightness(1.05);}
+
+  main{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+  .page{display:none;padding-top:36px;}
+  .page.active{display:block;}
+
+  /* ---------- COVER ---------- */
+  .cover{
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,var(--indigo) 0%, var(--indigo-dark) 100%);
+    border-radius:28px;padding:80px 56px;margin-top:20px;
+    color:#fff;box-shadow:var(--shadow);
+    min-height:520px;display:flex;flex-direction:column;justify-content:center;
+  }
+  .cover .blob.b1{width:280px;height:280px;background:var(--coral);top:-90px;right:-70px;opacity:.35;}
+  .cover .blob.b2{width:220px;height:220px;background:var(--teal);bottom:-80px;left:-60px;opacity:.3;}
+  .cover .blob.b3{width:120px;height:120px;background:var(--gold);bottom:40px;right:120px;opacity:.4;}
+  .cover-eyebrow{color:#D9D4FF;font-family:'Work Sans';letter-spacing:.2em;text-transform:uppercase;font-size:.78rem;font-weight:600;position:relative;z-index:2;}
+  .cover h1{
+    font-size:clamp(2.6rem,6vw,4.4rem);color:#fff;line-height:1.05;margin-top:14px;position:relative;z-index:2;
+  }
+  .cover .family-name-field{
+    border-bottom:3px dashed rgba(255,255,255,.5);
+    outline:none;min-width:280px;display:inline-block;
+    padding:2px 6px;
+  }
+  .cover .family-name-field:empty:before{content:"The _______ Family";opacity:.55;}
+  .cover-sub{
+    margin-top:22px;font-size:1.05rem;color:#E7E3FF;max-width:520px;position:relative;z-index:2;
+  }
+  .cover-meta{
+    margin-top:46px;display:flex;gap:38px;flex-wrap:wrap;position:relative;z-index:2;
+  }
+  .cover-meta .field{display:flex;flex-direction:column;gap:6px;}
+  .cover-meta label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#C9C3F5;font-weight:600;}
+  .cover-meta [contenteditable]{
+    font-family:'Baloo 2';font-weight:600;font-size:1.15rem;color:#fff;
+    border-bottom:2px solid rgba(255,255,255,.4);outline:none;min-width:160px;padding:2px 2px 4px;
+  }
+  .cover-footnote{margin-top:52px;font-size:.8rem;color:#B9B2E8;position:relative;z-index:2;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{margin-bottom:8px;}
+  .section-head h2{font-size:2rem;}
+  .section-head p{color:var(--ink-soft);margin-top:8px;font-size:.98rem;max-width:640px;}
+  .toolbar{display:flex;justify-content:flex-end;margin:18px 0 8px;}
+  .add-btn{
+    font-family:'Work Sans';font-weight:700;font-size:.85rem;
+    background:#fff;border:2px solid var(--indigo);color:var(--indigo);
+    padding:9px 18px;border-radius:999px;cursor:pointer;transition:.15s;
+  }
+  .add-btn:hover{background:var(--indigo);color:#fff;}
+
+  /* ---------- FAMILY TREE ---------- */
+  .tree-wrap{
+    background:var(--card);border-radius:24px;padding:50px 30px 60px;
+    box-shadow:var(--shadow);margin-top:18px;overflow-x:auto;
+  }
+  .generation{position:relative;padding-top:46px;margin-top:0;}
+  .generation:first-child{padding-top:0;}
+  .generation:not(:first-child)::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:3px;height:46px;background:var(--indigo);opacity:.4;
+  }
+  .gen-label{
+    text-align:center;font-family:'Work Sans';font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;font-size:.72rem;color:var(--ink-soft);margin-bottom:18px;
+  }
+  .nodes-row{
+    position:relative;display:flex;justify-content:center;gap:38px;flex-wrap:wrap;
+    padding-top:30px;
+  }
+  .nodes-row::before{
+    content:'';position:absolute;top:0;left:8%;right:8%;height:3px;background:var(--indigo);opacity:.25;
+  }
+  .node{
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;width:150px;
+  }
+  .node::before{
+    content:'';position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+    width:3px;height:30px;background:var(--indigo);opacity:.25;
+  }
+  .avatar{
+    width:88px;height:88px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo 2';font-weight:700;font-size:1.6rem;color:#fff;
+    background-size:cover;background-position:center;cursor:pointer;
+    border:4px solid #fff;box-shadow:0 6px 18px rgba(55,48,169,.18);
+    position:relative;
+  }
+  .grandparent .avatar{background-color:var(--gold);}
+  .parent .avatar{background-color:var(--coral);}
+  .child .avatar{background-color:var(--teal);}
+  .avatar input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .avatar .plus{position:absolute;bottom:-2px;right:-2px;width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;font-size:.9rem;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+  .node-name{
+    font-family:'Baloo 2';font-weight:600;font-size:.98rem;text-align:center;
+    outline:none;border-bottom:2px dashed transparent;padding:1px 3px;min-width:60px;
+  }
+  .node-name:hover,.node-name:focus{border-color:var(--line);}
+  .node-rel{
+    font-family:'Work Sans';font-size:.72rem;color:var(--ink-soft);text-align:center;
+    outline:none;text-transform:uppercase;letter-spacing:.08em;font-weight:600;min-width:60px;
+  }
+  .node-remove{
+    position:absolute;top:-8px;left:-8px;width:20px;height:20px;border-radius:50%;
+    background:#fff;border:1px solid var(--line);color:var(--ink-soft);font-size:.7rem;
+    display:none;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .node:hover .node-remove{display:flex;}
+  .add-node{
+    width:88px;height:88px;border-radius:50%;border:2px dashed var(--line);
+    background:transparent;color:var(--ink-soft);font-size:1.6rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .add-node:hover{border-color:var(--indigo);color:var(--indigo);}
+
+  /* ---------- FAMILY TREE (auto-generated from profiles) ---------- */
+  .ft-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin:18px 0;}
+  .ft-mode-toggle{display:flex;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px;gap:4px;}
+  .ft-mode-btn{font-family:'Work Sans';font-weight:700;font-size:.82rem;border:none;background:transparent;color:var(--ink-soft);padding:8px 20px;border-radius:999px;cursor:pointer;transition:.15s;}
+  .ft-mode-btn.active{background:var(--indigo);color:#fff;}
+  .ft-mode-btn:not(.active):hover{background:#EFEBFB;color:var(--indigo);}
+  .ft-zoom-controls{display:flex;align-items:center;gap:8px;}
+  .ft-zoom-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--indigo);font-size:1.15rem;line-height:1;cursor:pointer;font-family:'Work Sans';font-weight:700;}
+  .ft-zoom-btn:hover{border-color:var(--indigo);background:#EFEBFB;}
+  #ft-zoom-pct{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink-soft);min-width:42px;text-align:center;}
+  .ft-fit-btn{font-family:'Work Sans';font-weight:700;font-size:.82rem;background:#fff;border:1.5px solid var(--indigo);color:var(--indigo);padding:8px 16px;border-radius:999px;cursor:pointer;}
+  .ft-fit-btn:hover{background:var(--indigo);color:#fff;}
+
+  .ft-canvas-outer{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:44px 20px;overflow:auto;min-height:320px;}
+  .ft-wrapper{position:relative;display:inline-flex;flex-direction:column;gap:64px;transform-origin:top center;padding:6px 34px 18px;}
+  .ft-wrapper.ft-cards-mode{gap:86px;}
+  .ft-row{display:flex;gap:34px;align-items:flex-start;position:relative;z-index:1;}
+  .ft-unit{display:flex;align-items:flex-start;}
+  .ft-spouse-link{width:22px;height:3px;background:var(--indigo);opacity:.35;margin-top:38px;flex:none;}
+  .ft-wrapper.ft-cards-mode .ft-spouse-link{margin-top:30px;}
+
+  .ft-node{display:flex;flex-direction:column;align-items:center;width:112px;text-align:center;gap:6px;cursor:pointer;padding:6px 4px;border-radius:12px;transition:.15s;}
+  .ft-node:hover{background:#F3F1FE;}
+  .ft-avatar{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Baloo 2';font-weight:700;font-size:1.15rem;border:3px solid #fff;box-shadow:0 4px 14px rgba(55,48,169,.18);outline:3px solid #C3D6F7;outline-offset:1px;}
+  .ft-name{font-family:'Baloo 2';font-weight:600;font-size:.84rem;color:var(--ink);line-height:1.2;}
+  .ft-rel{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;}
+
+  .ft-wrapper.ft-cards-mode .ft-node{width:138px;padding:12px 10px;background:#fff;border:1.5px solid var(--line);border-radius:14px;box-shadow:0 4px 12px rgba(55,48,169,.08);}
+  .ft-wrapper.ft-cards-mode .ft-avatar{width:56px;height:56px;border-radius:14px;font-size:1rem;}
+
+  svg.ft-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;}
+
+  .ft-legend{display:flex;flex-wrap:wrap;gap:11px 22px;justify-content:center;margin:26px 0 10px;padding:20px;background:var(--card);border-radius:18px;box-shadow:var(--shadow);}
+  .ft-legend-item{display:flex;align-items:center;gap:8px;font-family:'Work Sans';font-weight:600;font-size:.82rem;color:var(--ink-soft);}
+  .ft-legend-swatch{width:13px;height:13px;border-radius:4px;display:inline-block;flex:none;}
+  .ft-empty{padding:60px 20px;text-align:center;color:var(--ink-soft);font-family:'Work Sans';font-size:.95rem;}
+
+  /* ---------- PROFILES : family book ---------- */
+  #page-profiles{
+    background:var(--pb-bg);
+    border-radius:28px;
+    padding:34px 34px 46px;
+    margin-top:8px;
+  }
+  .pb-header{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    padding-bottom:22px;margin-bottom:22px;
+    border-bottom:2px solid var(--pb-black);
+  }
+  .pb-logo{
+    width:76px;height:76px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 35% 30%, #8C2E4F, var(--pb-maroon) 65%);
+    border:3px dashed var(--pb-gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;font-weight:800;font-size:1.4rem;color:var(--pb-gold);
+  }
+  .pb-title-block{margin-right:auto;}
+  .pb-title-block h2{
+    font-family:'Playfair Display',serif;font-weight:800;font-size:2.1rem;color:var(--pb-black);
+    letter-spacing:.01em;
+  }
+  .pb-title-block .pb-subtitle{
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--pb-muted);margin-top:4px;
+  }
+  .pb-header-actions{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+  .pb-btn-row{display:flex;gap:10px;}
+  .pb-outline-btn{
+    font-family:'Work Sans';font-weight:600;font-size:.85rem;
+    background:transparent;border:1.5px solid var(--pb-black);color:var(--pb-black);
+    padding:10px 18px;border-radius:8px;cursor:pointer;transition:.15s;
+  }
+  .pb-outline-btn:hover{background:var(--pb-black);color:var(--pb-bg);}
+  .pb-solid-btn{
+    font-family:'Work Sans';font-weight:700;font-size:.85rem;
+    background:var(--pb-maroon);border:1.5px solid var(--pb-maroon);color:#fff;
+    padding:10px 18px;border-radius:8px;cursor:pointer;transition:.15s;
+  }
+  .pb-solid-btn:hover{filter:brightness(1.1);}
+  .pb-updated{
+    font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--pb-muted);
+    display:flex;align-items:center;gap:6px;
+  }
+  .pb-updated::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--pb-gold);display:inline-block;}
+
+  .pb-searchbar{
+    display:flex;align-items:center;gap:14px;
+    background:var(--pb-card);border:1.5px solid var(--pb-line);border-radius:12px;
+    padding:14px 18px;margin-bottom:26px;
+  }
+  .pb-searchbar svg{flex:none;color:var(--pb-muted);}
+  .pb-searchbar input{
+    flex:1;border:none;background:transparent;outline:none;
+    font-family:'Work Sans';font-size:.95rem;color:var(--pb-ink);
+  }
+  .pb-searchbar input::placeholder{color:var(--pb-muted);}
+  .pb-count{
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--pb-muted);white-space:nowrap;
+  }
+
+  /* ---------- GOOGLE SHEET SYNC ---------- */
+  .pb-sheetsync{
+    background:var(--pb-card);border:1.5px solid var(--pb-line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;
+  }
+  .pb-sheetsync-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .pb-sheetsync-row label{
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--pb-muted);font-weight:700;white-space:nowrap;
+  }
+  #pb-sheet-url{
+    flex:1;min-width:220px;font-family:'Work Sans';font-size:.88rem;
+    padding:9px 12px;border:1.5px solid var(--pb-line);border-radius:8px;
+    outline:none;color:var(--pb-ink);background:#fff;
+  }
+  #pb-sheet-url:focus{border-color:var(--pb-gold-deep);}
+  .pb-sheetsync-status{
+    margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--pb-muted);
+  }
+  .pb-sheetsync-status.ok{color:var(--pb-teal);}
+  .pb-sheetsync-status.err{color:var(--pb-maroon);}
+  .pb-setup-details{
+    margin-bottom:22px;font-family:'Work Sans';font-size:.88rem;color:var(--pb-ink);
+    background:var(--pb-card);border:1px dashed var(--pb-line);border-radius:12px;padding:14px 18px;
+  }
+  .pb-setup-details summary{
+    cursor:pointer;font-weight:700;color:var(--pb-maroon);font-family:'JetBrains Mono',monospace;
+    font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  }
+  .pb-setup-details ol{margin:12px 0 0;padding-left:20px;line-height:1.7;}
+  .pb-setup-details code{
+    background:#F2EBD8;padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.82rem;
+  }
+
+  .profiles-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;
+  }
+  .profile-card{
+    background:var(--pb-card);border-radius:14px;padding:22px 22px 20px;
+    border:1px solid var(--pb-line);
+    box-shadow:0 4px 14px rgba(35,28,21,.06);
+    position:relative;
+    transition:box-shadow .15s;
+  }
+  .profile-card:hover{box-shadow:0 8px 22px rgba(35,28,21,.10);}
+  .rel-badge{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.68rem;
+    letter-spacing:.12em;text-transform:uppercase;color:#fff;
+    padding:5px 12px;border-radius:5px;margin-bottom:16px;
+    outline:none;
+  }
+  .badge-myself{background:var(--pb-maroon);}
+  .badge-father{background:var(--pb-black);}
+  .badge-mother{background:var(--pb-rose);}
+  .badge-brother{background:var(--pb-teal);}
+  .badge-sister{background:var(--pb-brown);}
+  .badge-grandparent{background:var(--pb-gold-deep);}
+  .badge-other{background:#4B4438;}
+
+  .profile-top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .profile-avatar-wrap{position:relative;flex:none;width:60px;height:60px;}
+  .profile-avatar{
+    width:60px;height:60px;border-radius:50%;flex:none;
+    background:var(--pb-gold);background-size:cover;background-position:center;
+    position:relative;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1rem;color:#fff;
+    border:2px solid var(--pb-gold-deep);
+  }
+  .avatar-file-input{display:none;}
+  .avatar-cam-btn{
+    position:absolute;bottom:-3px;right:-3px;width:22px;height:22px;border-radius:50%;
+    background:#fff;border:1.5px solid var(--pb-line);color:var(--pb-gold-deep);
+    display:flex;align-items:center;justify-content:center;font-size:.68rem;line-height:1;
+    cursor:pointer;padding:0;box-shadow:0 2px 6px rgba(35,28,21,.18);transition:.15s;
+  }
+  .avatar-cam-btn:hover{background:var(--pb-gold-deep);color:#fff;border-color:var(--pb-gold-deep);}
+  .avatar-menu{
+    display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:30;
+    background:#fff;border:1px solid var(--pb-line);border-radius:10px;min-width:150px;
+    box-shadow:0 10px 26px rgba(35,28,21,.18);overflow:hidden;
+  }
+  .avatar-menu.open{display:block;}
+  .avatar-menu button{
+    display:block;width:100%;text-align:left;padding:10px 14px;background:none;border:none;
+    font-family:'Work Sans';font-weight:600;font-size:.84rem;color:var(--pb-ink);cursor:pointer;
+  }
+  .avatar-menu button:hover{background:#F2EBD8;}
+  .avatar-menu button.avatar-menu-remove{color:var(--pb-maroon);}
+  .avatar-menu button.avatar-menu-remove:hover{background:#F7E0E7;}
+  .profile-name{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:var(--pb-black);
+    outline:none;border-bottom:2px dashed transparent;padding:2px 0;line-height:1.25;
+  }
+  .profile-name:hover,.profile-name:focus{border-color:var(--pb-line);}
+  .profile-age{
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.82rem;color:var(--pb-gold-deep);
+    margin-top:3px;outline:none;
+  }
+  .profile-rel{display:none;}
+
+  .mini-fields{
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;
+    padding-top:14px;margin-top:2px;border-top:1px dashed var(--pb-line);
+  }
+  .mini-fields .mini-block label{
+    font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--pb-muted);font-weight:700;
+    font-family:'Work Sans';
+  }
+  .mini-fields .mini-val{
+    font-size:.88rem;color:var(--pb-ink);margin-top:2px;font-family:'Work Sans';
+    min-height:1.2em;
+  }
+
+  .card-actions{
+    display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--pb-line);
+  }
+  .pb-card-btn{
+    flex:1;font-family:'Work Sans';font-weight:600;font-size:.8rem;
+    padding:8px 0;border-radius:7px;cursor:pointer;transition:.15s;text-align:center;
+    border:1.5px solid var(--pb-black);background:transparent;color:var(--pb-black);
+  }
+  .pb-card-btn.view:hover{background:var(--pb-black);color:#fff;}
+  .pb-card-btn.edit:hover{background:var(--pb-gold-deep);border-color:var(--pb-gold-deep);color:#fff;}
+  .pb-card-btn.delete{border-color:var(--pb-maroon);color:var(--pb-maroon);}
+  .pb-card-btn.delete:hover{background:var(--pb-maroon);color:#fff;}
+
+  .profile-fields{
+    display:none;grid-template-columns:1fr 1fr;gap:12px 14px;margin-top:16px;
+    padding-top:14px;border-top:1px dashed var(--pb-line);
+  }
+  .profile-fields.open{display:grid;}
+  .field-block{display:flex;flex-direction:column;gap:3px;}
+  .field-block.full{grid-column:1/-1;}
+  .field-block label{font-size:.64rem;text-transform:uppercase;letter-spacing:.09em;color:var(--pb-muted);font-weight:700;font-family:'Work Sans';}
+  .field-block [contenteditable]{
+    font-size:.88rem;outline:none;border-bottom:1.5px solid var(--pb-line);padding:3px 2px;min-height:1.3em;
+    color:var(--pb-ink);font-family:'Work Sans';
+  }
+  .field-block [contenteditable]:focus{border-color:var(--pb-gold-deep);}
+  .field-block [contenteditable][contenteditable="false"]{border-bottom-color:transparent;}
+  .card-remove{display:none;}
+
+  /* ---------- PROFILE VIEW MODAL ---------- */
+  .pb-modal-overlay{
+    display:none;position:fixed;inset:0;z-index:200;
+    background:rgba(33,26,17,.55);
+    align-items:flex-start;justify-content:center;
+    padding:60px 20px;overflow-y:auto;
+  }
+  .pb-modal-overlay.open{display:flex;}
+  .pb-modal{
+    width:100%;max-width:780px;max-height:calc(100vh - 120px);
+    background:var(--pb-card);border-radius:16px;
+    box-shadow:0 30px 70px rgba(20,15,8,.35);
+    display:flex;flex-direction:column;overflow:hidden;
+    border-top:6px solid var(--pb-maroon);
+  }
+  .pb-modal-header{
+    padding:26px 30px 18px;border-bottom:2px solid var(--pb-line);
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex:none;
+  }
+  .pb-modal-header h3{
+    font-family:'Playfair Display',serif;font-weight:800;font-size:1.7rem;color:var(--pb-ink);
+  }
+  .pb-modal-rel{
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--pb-muted);margin-top:6px;font-weight:600;
+  }
+  .pb-modal-close{
+    flex:none;width:32px;height:32px;border-radius:50%;border:none;background:transparent;
+    color:var(--pb-muted);font-size:1.2rem;cursor:pointer;transition:.15s;
+  }
+  .pb-modal-close:hover{background:var(--pb-line);color:var(--pb-ink);}
+  .pb-modal-body{
+    padding:22px 30px 10px;overflow-y:auto;flex:1;
+  }
+  .pb-row{
+    display:flex;gap:20px;padding:10px 0;border-bottom:1px solid rgba(220,208,176,.6);
+  }
+  .pb-row:last-of-type{border-bottom:none;}
+  .pb-row .pb-row-label{
+    flex:none;width:150px;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--pb-muted);font-weight:600;padding-top:2px;
+  }
+  .pb-row .pb-row-value{
+    flex:1;font-family:'Work Sans';font-size:.98rem;color:var(--pb-ink);line-height:1.5;
+  }
+  .pb-section-heading{
+    display:flex;align-items:center;gap:12px;
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--pb-maroon);font-weight:700;
+    margin:22px 0 10px;
+  }
+  .pb-section-heading::after{content:'';flex:1;height:1px;background:var(--pb-line);}
+  .pb-block{
+    background:#F2EBD8;border-left:4px solid var(--pb-gold-deep);
+    border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;
+  }
+  .pb-block .pb-block-title{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:1.08rem;color:var(--pb-ink);
+  }
+  .pb-block .pb-block-sub{
+    font-family:'Work Sans';font-size:.92rem;color:var(--pb-ink);margin-top:3px;
+  }
+  .pb-block .pb-block-meta{
+    font-family:'Work Sans';font-size:.82rem;color:var(--pb-muted);margin-top:5px;
+  }
+  .pb-block.plain{
+    font-family:'Work Sans';font-size:.94rem;color:var(--pb-ink);line-height:1.5;
+  }
+  .pb-modal-footer{
+    flex:none;display:flex;justify-content:flex-end;gap:10px;
+    padding:18px 30px;border-top:2px solid var(--pb-line);
+  }
+
+  /* ---------- EDIT RECORD MODAL ---------- */
+  .pb-modal-sub{
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--pb-muted);margin-top:4px;font-weight:600;
+  }
+  .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;}
+  .edit-field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
+  .edit-field.full{grid-column:1/-1;}
+  .edit-field label{
+    font-family:'Work Sans';font-weight:700;font-size:.72rem;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--pb-gold-deep);
+  }
+  .edit-field input[type="text"],
+  .edit-field input:not([type]),
+  .edit-field select,
+  .edit-field textarea,
+  .edit-field input[list]{
+    font-family:'Work Sans';font-size:.95rem;color:var(--pb-ink);
+    border:1.5px solid var(--pb-line);border-radius:9px;
+    padding:11px 13px;outline:none;background:#fff;width:100%;
+  }
+  .edit-field select{appearance:auto;cursor:pointer;}
+  .edit-field textarea{resize:vertical;min-height:80px;font-family:'Work Sans';}
+  .edit-field input:focus,.edit-field select:focus,.edit-field textarea:focus{border-color:var(--pb-gold-deep);}
+  .edit-field input::placeholder,.edit-field textarea::placeholder{color:var(--pb-muted);}
+
+  .edit-section-heading{
+    display:flex;align-items:center;gap:12px;
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--pb-maroon);font-weight:700;
+    margin:8px 0 12px;
+  }
+  .edit-section-heading::after{content:'';flex:1;height:1px;background:var(--pb-line);}
+
+  .entry-card{
+    background:#F2EBD8;border:1px solid var(--pb-line);border-radius:10px;
+    padding:16px 18px;margin-bottom:14px;
+  }
+  .entry-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
+  .entry-remove{
+    font-family:'Work Sans';font-weight:700;font-size:.8rem;color:var(--pb-maroon);
+    background:none;border:none;cursor:pointer;padding:2px 0;
+  }
+  .entry-remove:hover{text-decoration:underline;}
+  .add-entry-btn{
+    width:100%;font-family:'Work Sans';font-weight:700;font-size:.88rem;
+    background:transparent;border:1.5px dashed var(--pb-gold-deep);color:var(--pb-gold-deep);
+    padding:12px;border-radius:9px;cursor:pointer;margin-bottom:22px;transition:.15s;
+  }
+  .add-entry-btn:hover{background:#F2EBD8;}
+  @media (max-width:640px){ .edit-grid{grid-template-columns:1fr;} }
+
+  footer.hint{
+    text-align:center;color:var(--ink-soft);font-size:.82rem;margin-top:50px;padding-bottom:10px;
+  }
+
+  /* ---------- PRINT ---------- */
+  @media print{
+    nav.tabbar,.toolbar,.add-node,.node-remove,.card-remove,.avatar .plus,.profile-avatar::after{display:none !important;}
+    body{background:#fff;}
+    main{max-width:100%;padding:0;}
+    .page{display:block !important;page-break-after:always;padding-top:0;}
+    .cover{box-shadow:none;border-radius:0;min-height:auto;padding:70px 50px;}
+    .tree-wrap,.profile-card{box-shadow:none;}
+    .tree-wrap{border-radius:0;}
+    footer.hint{display:none;}
+  }
+  @media (max-width:640px){
+    .cover{padding:50px 26px;}
+    .cover-meta{gap:22px;}
+    .profiles-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabbar">
+  <div class="brand"><span class="dot"></span>Family Record Book</div>
+  <button class="tab-btn active" data-tab="cover">Cover</button>
+  <button class="tab-btn" data-tab="profiles">Profiles</button>
+  <button class="tab-btn" data-tab="tree">Family Tree</button>
+  <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+</nav>
+
+<main>
+
+  <!-- ============ COVER ============ -->
+  <section class="page active" id="page-cover">
+    <div class="cover">
+      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+      <div class="cover-eyebrow">Est. keeping our story straight</div>
+      <h1>The <span class="family-name-field" contenteditable="true"></span> Family</h1>
+      <p class="cover-sub">A living record of who we are, how we're connected, and the small details worth remembering — filled in by hand, kept for good.</p>
+      <div class="cover-meta">
+        <div class="field"><label>Compiled by</label><div contenteditable="true">&nbsp;</div></div>
+        <div class="field"><label>Date started</label><div contenteditable="true">&nbsp;</div></div>
+        <div class="field"><label>Home base</label><div contenteditable="true">&nbsp;</div></div>
+      </div>
+      <div class="cover-footnote">Tip: fill this out on screen, then use “Print / Save PDF” above to keep a permanent copy.</div>
+    </div>
+  </section>
+
+  <!-- ============ FAMILY TREE ============ -->
+  <section class="page" id="page-profiles">
+
+    <div class="pb-header">
+      <div class="pb-logo" id="pb-logo">FB</div>
+      <div class="pb-title-block">
+        <h2>Family Book</h2>
+        <div class="pb-subtitle" id="pb-subtitle">Family Profiles</div>
+      </div>
+      <div class="pb-header-actions">
+        <div class="pb-btn-row">
+          <button class="pb-outline-btn" onclick="document.querySelector('[data-tab=tree]').click()">Family Tree</button>
+          <button class="pb-solid-btn" onclick="addProfile()">＋ New Record</button>
+        </div>
+        <div class="pb-updated" id="pb-updated">Last updated: —</div>
+      </div>
+    </div>
+
+    <details class="pb-setup-details">
+      <summary>How to connect this page to a Google Sheet (one-time setup)</summary>
+      <ol>
+        <li>Create a new Google Sheet (any name is fine — the page will manage a tab called <code>Profiles</code> inside it).</li>
+        <li>In the Sheet, open <code>Extensions → Apps Script</code>.</li>
+        <li>Delete anything in the editor and paste in the Apps Script code provided alongside this file, then save.</li>
+        <li>Click <code>Deploy → New deployment</code>, choose type <code>Web app</code>. Set "Execute as" to <code>Me</code> and "Who has access" to <code>Anyone</code>, then click <code>Deploy</code> and authorize it.</li>
+        <li>Copy the <code>Web app URL</code> it gives you and paste it into the box below.</li>
+        <li>Click <strong>Load from Sheet</strong> once to pull in any existing data, and <strong>Save to Sheet</strong> whenever you want to push your latest edits up.</li>
+      </ol>
+    </details>
+
+    <div class="pb-sheetsync">
+      <div class="pb-sheetsync-row">
+        <label for="pb-sheet-url">Sheet URL</label>
+        <input type="text" id="pb-sheet-url" placeholder="Paste your Apps Script Web App URL here">
+        <button class="pb-outline-btn" onclick="loadFromSheet()">⭳ Load from Sheet</button>
+        <button class="pb-solid-btn" onclick="saveToSheet()">⭱ Save to Sheet</button>
+      </div>
+      <div class="pb-sheetsync-status" id="pb-sheetsync-status">Not connected yet — see setup instructions above.</div>
+    </div>
+
+    <div class="pb-searchbar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="pb-search" placeholder="Search — name, dates, address, work, education..." oninput="filterProfiles()">
+      <div class="pb-count" id="pb-count">0 records</div>
+    </div>
+
+    <div class="profiles-grid" id="profiles-grid">
+      <!-- template card 4 -->
+      <div class="profile-card" data-edu='[{"school":"University of Dagon, Yangon","years":"April 2001 to May 2004","grad":"Bachelor of Economics"}]' data-work='[{"company":"Self-employed","position":"Trader","start":"","income":""}]'>
+        <span class="rel-badge badge-myself" contenteditable="true">Myself</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-maroon)" onclick="toggleAvatarMenu(event,this)">ZP</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Zarni Phyo Wai</div>
+            <div class="profile-age" data-key="age" contenteditable="true">42 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">Bachelor of Economics</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Trader</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">26.6.1984</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">42 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Pyapon, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/Ba Ka La(N)171365</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MJ269422</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Atheism</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">Burmese, English</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">B</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">+95 9 954938380</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">zarniphyowai@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">5' 6"</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">—</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Than Ngwe @ Than Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Margaret</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Hla Hla</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">No. 23, Theinni Street, Thida Ward, Kyi Myin Daing Township, Yangon, Myanmar</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">To do list - Edit Family Tree</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-other" contenteditable="true">Wife</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">HH</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Hla Hla</div>
+            <div class="profile-age" data-key="age" contenteditable="true">&nbsp;</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">&nbsp;</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Zarni Phyo Wai</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"Yangon Technological University","years":"Dec 2004 to Nov 2009","grad":""}]' data-work='[{"company":"LYL Engineering (HK) Pte. Ltd","position":"Resident Technical Officer","start":"","income":""}]'>
+        <span class="rel-badge badge-brother" contenteditable="true">Brother</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-teal)" onclick="toggleAvatarMenu(event,this)">KW</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Kyi Phyu Phyo Wai</div>
+            <div class="profile-age" data-key="age" contenteditable="true">38 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">Yangon Technological University</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Resident Technical Officer</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">30.5.1988</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">38 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Pyapon, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/ Ba Ka La (N) 201852</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MG766923</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen + Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">Burmese, English</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">kokyiphyuphyowai@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Than Ngwe @ Than Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Margaret</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Yin Mar Aye</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">Singapore</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"Singapore Polytechnic","years":"May 2023 to June 2023, Oct 2018 to June 2019","grad":"Diploma"},{"school":"Myanmar Mercantile Marine College","years":"March 2007 to April 2009","grad":"Diploma"}]' data-work='[{"company":"Self-employed","position":"Deliver Man","start":"","income":""}]'>
+        <span class="rel-badge badge-brother" contenteditable="true">Brother</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-teal)" onclick="toggleAvatarMenu(event,this)">TW</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Thurein Phyo Wai</div>
+            <div class="profile-age" data-key="age" contenteditable="true">36 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">Diploma</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Deliver Man</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">1.6.1990</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">36 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Sein Hein, Bogale Township, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/ Ba Ka La (N) 201851</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MF293514</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen + Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">thureinphyowai@outlook.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Than Ngwe @ Than Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Margaret</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Khine Yi Mon</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">U.S</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"University of Medicine 2, Yangon","years":"Jan 2009 – June 2015","grad":"M.B.B.S Degree"}]' data-work='[{"company":"Forrest Family Practice (IDANENEO No.123 Pty Ltd)","position":"General Practitioner, Doctor","start":"08 Dec 2025","income":"$13,000 / month"}]'>
+        <span class="rel-badge badge-sister" contenteditable="true">Sister</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-brown)" onclick="toggleAvatarMenu(event,this)">SW</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Sumon Yadanar Phyo Wai</div>
+            <div class="profile-age" data-key="age" contenteditable="true">34 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">M.B.B.S Degree</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">General Practitioner, Doctor</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">31.3.1992</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">34 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Sein Hein, Bogale Township, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/Ah Ma Ta (N) 000893</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MI506355</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen + Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">sumonyadanarphyowai@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Than Ngwe @ Than Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Margaret</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Ye Yint Aung</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">122 Spencer Street, Bunbury WA 6230, Australia</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"Middle School (Grade 5 Pass)","years":"","grad":""}]' data-work='[{"company":"Family","position":"Merchant","start":"","income":""}]'>
+        <span class="rel-badge badge-father" contenteditable="true">Father</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-black)" onclick="toggleAvatarMenu(event,this)">TW</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Than Ngwe @ Than Wai</div>
+            <div class="profile-age" data-key="age" contenteditable="true">74 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">Middle School (Grade 5 Pass)</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Merchant</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">26.10.1951</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">74 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Pyanpon, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/Ba Ka La (N) 128188</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MG330537</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">O</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">+95 9 428595970</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">than60phyo@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">U Aung Sin @ Li Guang Wei</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Daw Khin Shwe</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Margaret</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">No.22, Thenini Street, Thida Ward, Kyi Myin Daing Township, Yangon, Myanmar</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"University of Pathein","years":"October 1979 - April 1985","grad":"LLB (Bachelor of Law)"}]' data-work='[{"company":"Ministry of Health","position":"Health Assistant (Retired)","start":"","income":""}]'>
+        <span class="rel-badge badge-mother" contenteditable="true">Mother</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-rose)" onclick="toggleAvatarMenu(event,this)">MG</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Margaret</div>
+            <div class="profile-age" data-key="age" contenteditable="true">71 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">LLB (Bachelor of Law)</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Health Assistant (Retired)</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">5.1.1955</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">71 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Myaung Mya, Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">14/Ba Ka La (N) 097037</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Christian</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">B</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">+95 9 250745313</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">nantmargaretwai@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Ba Chaw</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Elizabeth</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Than Ngwe @ Than Wai</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">No.22, Thenini Street, Thida Ward, Kyi Myin Daing Township, Yangon, Myanmar</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[{"company":"","position":"Engineer","start":"","income":""}]'>
+        <span class="rel-badge badge-other" contenteditable="true">Sister-in-law</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">YA</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Yin Mar Aye</div>
+            <div class="profile-age" data-key="age" contenteditable="true">42 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Engineer</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">10.4.1984</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">42 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Myanmar</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">MF538498</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Ba</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Mya</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Kyi Phyu Phyo Wai</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">Singapore</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-other" contenteditable="true">Sister-in-law</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">KM</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Khine Yi Mon</div>
+            <div class="profile-age" data-key="age" contenteditable="true">&nbsp;</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">&nbsp;</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">khaingmon.km24@gmail.com</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Thurein Phyo Wai</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-other" contenteditable="true">Brother-in-law</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">YA</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Ye Yint Aung</div>
+            <div class="profile-age" data-key="age" contenteditable="true">&nbsp;</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">&nbsp;</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Sumon Yadanar Phyo Wai</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-other" contenteditable="true">Nephew</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">NK</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Nathan Kyi @ Bhone Myat Kyi Phyu</div>
+            <div class="profile-age" data-key="age" contenteditable="true">10 months</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">5.9.2025</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">10 months</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Singapore</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen + Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Single</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Kyi Phyu Phyo Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Yin Mar Aye</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[{"school":"Elementary School, Singapore","years":"","grad":""}]' data-work='[{"company":"","position":"Student","start":"","income":""}]'>
+        <span class="rel-badge badge-other" contenteditable="true">Nephew</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">EK</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Ethan Kyi @ Khant Kyi Phyu</div>
+            <div class="profile-age" data-key="age" contenteditable="true">5 years</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">Elementary School, Singapore</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">Student</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">26.4.2021</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">5 years</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">Thomson Medical PTE LTD, Singapore</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">Karen + Bamar</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">Buddhist</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Single</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">Kyi Phyu Phyo Wai</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">Yin Mar Aye</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">Singapore</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-grandparent" contenteditable="true">Grandfather</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-gold-deep)" onclick="toggleAvatarMenu(event,this)">US</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">U Aung Sin @ Li Guang Wei</div>
+            <div class="profile-age" data-key="age" contenteditable="true">Deceased</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">Deceased</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Daw Khin Shwe</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-grandparent" contenteditable="true">Grandmother</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-gold-deep)" onclick="toggleAvatarMenu(event,this)">KS</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Daw Khin Shwe</div>
+            <div class="profile-age" data-key="age" contenteditable="true">Deceased</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">Deceased</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">U Aung Sin @ Li Guang Wei</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-grandparent" contenteditable="true">Grandfather</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-gold-deep)" onclick="toggleAvatarMenu(event,this)">BC</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Ba Chaw</div>
+            <div class="profile-age" data-key="age" contenteditable="true">Deceased</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">Deceased</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Male</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Elizabeth</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+      <!-- new record -->
+      <div class="profile-card" data-edu='[]' data-work='[]'>
+        <span class="rel-badge badge-grandparent" contenteditable="true">Grandmother</span>
+        <div class="profile-top">
+          <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-gold-deep)" onclick="toggleAvatarMenu(event,this)">EZ</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+          <div>
+            <div class="profile-name" contenteditable="true">Elizabeth</div>
+            <div class="profile-age" data-key="age" contenteditable="true">Deceased</div>
+          </div>
+        </div>
+        <div class="mini-fields">
+          <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+          <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+          <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+          <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+        </div>
+        <div class="profile-fields">
+          <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">Deceased</div></div>
+          <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Gender</label><div contenteditable="false">Female</div></div>
+          <div class="field-block"><label>Marital status</label><div contenteditable="false">Married</div></div>
+          <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block"><label>Spouse</label><div contenteditable="false">Ba Chaw</div></div>
+          <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+          <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="hint">Made with care, one family at a time. 💛</footer>
+
+    <div class="pb-modal-overlay" id="pb-modal-overlay" onclick="if(event.target===this) closeProfileModal()">
+      <div class="pb-modal">
+        <div class="pb-modal-header">
+          <div>
+            <h3 id="pb-modal-name">Name</h3>
+            <div class="pb-modal-rel" id="pb-modal-rel">Relation</div>
+          </div>
+          <button class="pb-modal-close" onclick="closeProfileModal()">✕</button>
+        </div>
+        <div class="pb-modal-body" id="pb-modal-body"></div>
+        <div class="pb-modal-footer">
+          <button class="pb-card-btn edit" id="pb-modal-edit" style="flex:none;padding:9px 22px;">Edit</button>
+          <button class="pb-card-btn delete" id="pb-modal-delete" style="flex:none;padding:9px 22px;">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ EDIT RECORD MODAL ============ -->
+    <div class="pb-modal-overlay" id="pb-edit-modal-overlay" onclick="if(event.target===this) closeEditModal()">
+      <div class="pb-modal">
+        <div class="pb-modal-header">
+          <div>
+            <h3>Edit Record</h3>
+            <div class="pb-modal-sub">Fill in the details below</div>
+          </div>
+          <button class="pb-modal-close" onclick="closeEditModal()">✕</button>
+        </div>
+        <div class="pb-modal-body">
+          <div class="edit-grid">
+            <div class="edit-field full">
+              <label>Full name</label>
+              <input type="text" id="ed-name" placeholder="e.g. Jane Doe">
+            </div>
+            <div class="edit-field">
+              <label>Relation</label>
+              <select id="ed-relation"></select>
+            </div>
+            <div class="edit-field">
+              <label>Date of birth</label>
+              <input type="text" id="ed-dob" placeholder="e.g. 12 March 1990">
+            </div>
+            <div class="edit-field">
+              <label>Death date</label>
+              <input type="text" id="ed-death" placeholder="Leave blank if living">
+            </div>
+            <div class="edit-field">
+              <label>NRC number</label>
+              <input type="text" id="ed-nrc">
+            </div>
+            <div class="edit-field">
+              <label>Spouse's name</label>
+              <input type="text" id="ed-spouse" list="family-names-list">
+            </div>
+            <div class="edit-field">
+              <label>Father's name</label>
+              <input type="text" id="ed-father" list="family-names-list">
+            </div>
+            <div class="edit-field">
+              <label>Mother's name</label>
+              <input type="text" id="ed-mother" list="family-names-list">
+            </div>
+            <div class="edit-field">
+              <label>Passport no.</label>
+              <input type="text" id="ed-passport">
+            </div>
+            <div class="edit-field">
+              <label>Ethnicity</label>
+              <input type="text" id="ed-ethnicity">
+            </div>
+            <div class="edit-field">
+              <label>Religion</label>
+              <input type="text" id="ed-religion">
+            </div>
+            <div class="edit-field">
+              <label>Languages</label>
+              <input type="text" id="ed-languages">
+            </div>
+            <div class="edit-field">
+              <label>Birth place</label>
+              <input type="text" id="ed-birthplace">
+            </div>
+            <div class="edit-field">
+              <label>Gender</label>
+              <select id="ed-gender">
+                <option value="">—</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="edit-field">
+              <label>Marital status</label>
+              <select id="ed-marital">
+                <option value="">—</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Divorced</option>
+                <option>Widowed</option>
+              </select>
+            </div>
+            <div class="edit-field">
+              <label>Blood type</label>
+              <select id="ed-blood">
+                <option value="">—</option>
+                <option>A</option><option>B</option><option>AB</option><option>O</option>
+              </select>
+            </div>
+            <div class="edit-field">
+              <label>Phone no.</label>
+              <input type="text" id="ed-phone">
+            </div>
+            <div class="edit-field">
+              <label>Email</label>
+              <input type="text" id="ed-email">
+            </div>
+            <div class="edit-field">
+              <label>Height</label>
+              <input type="text" id="ed-height">
+            </div>
+            <div class="edit-field">
+              <label>Weight</label>
+              <input type="text" id="ed-weight" placeholder="e.g. 65 kg">
+            </div>
+            <div class="edit-field full">
+              <label>Address</label>
+              <input type="text" id="ed-address">
+            </div>
+          </div>
+
+          <div class="edit-section-heading">Education</div>
+          <div id="ed-education-list"></div>
+          <button type="button" class="add-entry-btn" onclick="addEducationEntry()">+ Add education entry</button>
+
+          <div class="edit-section-heading">Work</div>
+          <div id="ed-work-list"></div>
+          <button type="button" class="add-entry-btn" onclick="addWorkEntry()">+ Add work entry</button>
+
+          <div class="edit-section-heading">Note</div>
+          <div class="edit-field full" style="margin-bottom:6px;">
+            <textarea id="ed-note" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="pb-modal-footer">
+          <button class="pb-outline-btn" onclick="closeEditModal()">Cancel</button>
+          <button class="pb-solid-btn" onclick="saveEditModal()">Save record</button>
+        </div>
+      </div>
+    </div>
+    <datalist id="family-names-list"></datalist>
+  </section>
+
+  <!-- ============ PROFILES ============ -->
+  <section class="page" id="page-tree">
+    <div class="section-head">
+      <h2>Our Family Tree</h2>
+      <p id="ft-subtitle-line">Built automatically from the Profiles tab, using each person's Father, Mother, and Spouse fields. Click a person to view their full record.</p>
+    </div>
+
+    <div class="ft-toolbar">
+      <div class="ft-mode-toggle">
+        <button class="ft-mode-btn active" data-mode="classic" onclick="ftSetMode('classic')">Classic</button>
+        <button class="ft-mode-btn" data-mode="cards" onclick="ftSetMode('cards')">Cards</button>
+      </div>
+      <div class="ft-zoom-controls">
+        <button class="ft-zoom-btn" onclick="ftSetZoom(ftZoom-0.1)" title="Zoom out">−</button>
+        <span id="ft-zoom-pct">100%</span>
+        <button class="ft-zoom-btn" onclick="ftSetZoom(ftZoom+0.1)" title="Zoom in">＋</button>
+        <button class="ft-fit-btn" onclick="ftFitScreen()">Fit screen</button>
+      </div>
+    </div>
+
+    <div class="ft-canvas-outer" id="ft-canvas"></div>
+
+    <div class="ft-legend" id="ft-legend"></div>
+  </section>
+
+</main>
+
+<script>
+  // ---- tab switching ----
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('page-'+btn.dataset.tab).classList.add('active');
+      if(btn.dataset.tab === 'tree'){
+        ftRenderTree();
+        requestAnimationFrame(()=>requestAnimationFrame(ftFitScreen));
+      }
+    });
+  });
+
+  // Google Sheets caps a single cell at ~50,000 characters, and a raw phone
+  // photo's base64 string blows past that instantly. Shrink + compress into a
+  // small JPEG thumbnail so the photo can actually round-trip through the sheet.
+  function makeAvatarThumbnail(img, maxChars){
+    let maxDim = 240;
+    let quality = 0.82;
+    let dataUrl = '';
+    for(let attempt=0; attempt<6; attempt++){
+      let w = img.width, h = img.height;
+      if(w >= h){ if(w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; } }
+      else { if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; } }
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1,w); canvas.height = Math.max(1,h);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      dataUrl = canvas.toDataURL('image/jpeg', quality);
+      if(dataUrl.length <= maxChars) break;
+      maxDim = Math.round(maxDim * 0.78);
+      quality = Math.max(0.4, quality - 0.12);
+    }
+    return dataUrl;
+  }
+
+  // ---- photo upload (Facebook-style: click avatar or camera badge -> menu -> upload/remove) ----
+  function setPhoto(evt, inputEl){
+    const file = evt.target.files[0];
+    if(!file) return;
+    const wrap = inputEl.closest('.profile-avatar-wrap');
+    const avatarEl = wrap ? wrap.querySelector('.profile-avatar') : null;
+    if(!avatarEl) return;
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const dataUrl = makeAvatarThumbnail(img, 45000);
+        avatarEl.style.backgroundImage = `url(${dataUrl})`;
+        avatarEl.style.color = 'transparent';
+      };
+      img.onerror = ()=>{
+        // fall back to the raw file if it somehow can't be decoded as an image
+        avatarEl.style.backgroundImage = `url(${e.target.result})`;
+        avatarEl.style.color = 'transparent';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    closeAllAvatarMenus();
+  }
+
+  function avatarHasPhoto(avatarEl){
+    const bg = avatarEl.style.backgroundImage;
+    return !!bg && bg !== 'none';
+  }
+
+  function toggleAvatarMenu(evt, el){
+    evt.stopPropagation();
+    const wrap = el.closest('.profile-avatar-wrap');
+    if(!wrap) return;
+    const menu = wrap.querySelector('.avatar-menu');
+    const wasOpen = menu.classList.contains('open');
+    closeAllAvatarMenus();
+    if(wasOpen) return;
+
+    const avatarEl = wrap.querySelector('.profile-avatar');
+    const hasPhoto = avatarHasPhoto(avatarEl);
+    const uploadBtn = menu.querySelector('.avatar-menu-upload');
+    const removeBtn = menu.querySelector('.avatar-menu-remove');
+    if(uploadBtn) uploadBtn.textContent = hasPhoto ? 'Change photo' : 'Upload photo';
+    if(removeBtn) removeBtn.style.display = hasPhoto ? '' : 'none';
+    menu.classList.add('open');
+  }
+
+  function closeAllAvatarMenus(){
+    document.querySelectorAll('.avatar-menu.open').forEach(m=>m.classList.remove('open'));
+  }
+  document.addEventListener('click', closeAllAvatarMenus);
+
+  function chooseAvatarPhoto(btn){
+    const wrap = btn.closest('.profile-avatar-wrap');
+    if(!wrap) return;
+    closeAllAvatarMenus();
+    const input = wrap.querySelector('.avatar-file-input');
+    if(input) input.click();
+  }
+
+  function removeAvatarPhoto(btn){
+    const wrap = btn.closest('.profile-avatar-wrap');
+    if(!wrap) return;
+    const avatarEl = wrap.querySelector('.profile-avatar');
+    if(avatarEl){
+      avatarEl.style.backgroundImage = '';
+      avatarEl.style.color = '';
+    }
+    const input = wrap.querySelector('.avatar-file-input');
+    if(input) input.value = '';
+    closeAllAvatarMenus();
+  }
+
+  // ---- profiles: add / remove card ----
+  function addProfile(){
+    const grid = document.getElementById('profiles-grid');
+    const card = document.createElement('div');
+    card.className = 'profile-card';
+    card.dataset.id = genId();
+    card.dataset.edu = '[]';
+    card.dataset.work = '[]';
+    card.innerHTML = `
+      <span class="rel-badge badge-other" contenteditable="true">&nbsp;</span>
+      <div class="profile-top">
+        <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">＋</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+        <div>
+          <div class="profile-name" contenteditable="true">&nbsp;</div>
+          <div class="profile-age" data-key="age" contenteditable="true">&nbsp;</div>
+        </div>
+      </div>
+      <div class="mini-fields">
+        <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">&nbsp;</div></div>
+        <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">&nbsp;</div></div>
+      </div>
+      <div class="card-actions">
+        <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+        <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+        <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+      </div>
+      <div class="profile-fields">
+        <div class="field-block"><label>Date of birth</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Death date</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">&nbsp;</div></div>
+        <div class="field-block"><label>Birth place</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>NRC number</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Passport no.</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Ethnicity</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Religion</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Languages</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Gender</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Marital status</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Blood type</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Phone no.</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Email</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Height</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Weight</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Father</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Mother</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block"><label>Spouse</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block full"><label>Address</label><div contenteditable="false">&nbsp;</div></div>
+        <div class="field-block full"><label>Note</label><div contenteditable="false">&nbsp;</div></div>
+      </div>`;
+    grid.appendChild(card);
+    wireMiniSyncForCard(card);
+    updatePbCount();
+    filterProfiles();
+    openEditModal(card.querySelector('.pb-card-btn.edit'));
+  }
+  function removeProfile(btn){
+    btn.closest('.profile-card').remove();
+    updatePbCount();
+  }
+
+  // ---- profiles: relation options + badge colors ----
+  const RELATION_OPTIONS = [
+    'Myself','Father','Mother','Husband','Wife','Son','Daughter',
+    'Grandfather','Grandmother','Brother','Sister',
+    'Father-in-law','Mother-in-law','Brother-in-law','Sister-in-law',
+    'Uncle','Aunt','Nephew','Niece','Cousin','Other'
+  ];
+  const RELATION_BADGE_CLASS = {
+    'myself':'badge-myself','father':'badge-father','mother':'badge-mother',
+    'brother':'badge-brother','sister':'badge-sister',
+    'grandfather':'badge-grandparent','grandmother':'badge-grandparent'
+  };
+  function relationBadgeClass(relation){
+    const key = (relation || '').trim().toLowerCase();
+    return RELATION_BADGE_CLASS[key] || 'badge-other';
+  }
+  function populateRelationSelect(){
+    const sel = document.getElementById('ed-relation');
+    if(!sel || sel.options.length) return;
+    const placeholder = document.createElement('option');
+    placeholder.value = ''; placeholder.textContent = '— Select relation —';
+    sel.appendChild(placeholder);
+    RELATION_OPTIONS.forEach(r=>{
+      const opt = document.createElement('option');
+      opt.value = r; opt.textContent = r;
+      sel.appendChild(opt);
+    });
+  }
+
+  // ---- profiles: read/write helpers for the hidden field-block data store ----
+  function getField(card, label){
+    const blocks = card.querySelectorAll('.profile-fields .field-block');
+    for(const fb of blocks){
+      const lab = fieldText(fb.querySelector('label'));
+      if(lab.toLowerCase() === label.toLowerCase()) return fieldText(fb.querySelector('[contenteditable]'));
+    }
+    return '';
+  }
+  function setField(card, label, value){
+    const blocks = card.querySelectorAll('.profile-fields .field-block');
+    for(const fb of blocks){
+      const lab = fieldText(fb.querySelector('label'));
+      if(lab.toLowerCase() === label.toLowerCase()){
+        fb.querySelector('[contenteditable]').textContent = value && value.trim() ? value.trim() : '\u00A0';
+        return;
+      }
+    }
+  }
+
+  // ---- profiles: education / work entry rows in the Edit modal ----
+  function makeEducationRow(entry){
+    entry = entry || {};
+    const row = document.createElement('div');
+    row.className = 'entry-card edu-entry';
+    row.innerHTML = `
+      <div class="entry-card-head">
+        <label style="font-family:'Work Sans';font-weight:700;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--pb-gold-deep);">School</label>
+        <button type="button" class="entry-remove" onclick="this.closest('.entry-card').remove()">Remove</button>
+      </div>
+      <input type="text" class="edu-school" value="${escapeAttr(entry.school||'')}" style="margin-bottom:12px;">
+      <div class="edit-grid">
+        <div class="edit-field"><label>Years attended</label><input type="text" class="edu-years" value="${escapeAttr(entry.years||'')}"></div>
+        <div class="edit-field"><label>Graduation</label><input type="text" class="edu-grad" value="${escapeAttr(entry.grad||'')}"></div>
+      </div>`;
+    row.querySelectorAll('.edit-field').forEach(f=>f.style.marginBottom='0');
+    return row;
+  }
+  function makeWorkRow(entry){
+    entry = entry || {};
+    const row = document.createElement('div');
+    row.className = 'entry-card work-entry';
+    row.innerHTML = `
+      <div class="entry-card-head">
+        <label style="font-family:'Work Sans';font-weight:700;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--pb-gold-deep);">Company</label>
+        <button type="button" class="entry-remove" onclick="this.closest('.entry-card').remove()">Remove</button>
+      </div>
+      <input type="text" class="work-company" value="${escapeAttr(entry.company||'')}" style="margin-bottom:12px;">
+      <div class="edit-grid">
+        <div class="edit-field"><label>Position</label><input type="text" class="work-position" value="${escapeAttr(entry.position||'')}"></div>
+        <div class="edit-field"><label>Start date</label><input type="text" class="work-start" value="${escapeAttr(entry.start||'')}"></div>
+      </div>
+      <div class="edit-field" style="margin-top:12px;"><label>Income</label><input type="text" class="work-income" placeholder="e.g. $13,000 / month" value="${escapeAttr(entry.income||'')}"></div>`;
+    return row;
+  }
+  function escapeAttr(str){
+    return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  }
+  function addEducationEntry(entry){
+    document.getElementById('ed-education-list').appendChild(makeEducationRow(entry));
+  }
+  function addWorkEntry(entry){
+    document.getElementById('ed-work-list').appendChild(makeWorkRow(entry));
+  }
+  function readEduJson(card){
+    try{ return JSON.parse(card.dataset.edu || '[]'); }catch(e){ return []; }
+  }
+  function readWorkJson(card){
+    try{ return JSON.parse(card.dataset.work || '[]'); }catch(e){ return []; }
+  }
+
+  // ---- profiles: Edit Record modal ----
+  let editingCard = null;
+
+  function populateFamilyNamesList(excludeCard){
+    const list = document.getElementById('family-names-list');
+    list.innerHTML = '';
+    document.querySelectorAll('#profiles-grid .profile-card').forEach(c=>{
+      if(c === excludeCard) return;
+      const name = fieldText(c.querySelector('.profile-name'));
+      if(!name) return;
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      list.appendChild(opt);
+    });
+  }
+
+  function openEditModal(btnOrCard){
+    populateRelationSelect();
+    const card = btnOrCard.classList && btnOrCard.classList.contains('profile-card') ? btnOrCard : btnOrCard.closest('.profile-card');
+    editingCard = card;
+    populateFamilyNamesList(card);
+
+    document.getElementById('ed-name').value = fieldText(card.querySelector('.profile-name'));
+    const relValue = fieldText(card.querySelector('.rel-badge'));
+    const relSel = document.getElementById('ed-relation');
+    relSel.value = RELATION_OPTIONS.includes(relValue) ? relValue : '';
+    if(relSel.value === '' && relValue){
+      let opt = [...relSel.options].find(o=>o.value === relValue);
+      if(!opt){
+        opt = document.createElement('option');
+        opt.value = relValue; opt.textContent = relValue;
+        relSel.appendChild(opt);
+      }
+      relSel.value = relValue;
+    }
+
+    document.getElementById('ed-dob').value = getField(card,'Date of birth');
+    document.getElementById('ed-death').value = getField(card,'Death date');
+    document.getElementById('ed-nrc').value = getField(card,'NRC number');
+    document.getElementById('ed-spouse').value = getField(card,'Spouse');
+    document.getElementById('ed-father').value = getField(card,'Father');
+    document.getElementById('ed-mother').value = getField(card,'Mother');
+    document.getElementById('ed-passport').value = getField(card,'Passport no.');
+    document.getElementById('ed-ethnicity').value = getField(card,'Ethnicity');
+    document.getElementById('ed-religion').value = getField(card,'Religion');
+    document.getElementById('ed-languages').value = getField(card,'Languages');
+    document.getElementById('ed-birthplace').value = getField(card,'Birth place');
+    document.getElementById('ed-gender').value = getField(card,'Gender');
+    document.getElementById('ed-marital').value = getField(card,'Marital status');
+    document.getElementById('ed-blood').value = getField(card,'Blood type');
+    document.getElementById('ed-phone').value = getField(card,'Phone no.');
+    document.getElementById('ed-email').value = getField(card,'Email');
+    document.getElementById('ed-height').value = getField(card,'Height');
+    document.getElementById('ed-weight').value = getField(card,'Weight');
+    document.getElementById('ed-address').value = getField(card,'Address');
+    document.getElementById('ed-note').value = getField(card,'Note');
+
+    const eduList = document.getElementById('ed-education-list');
+    eduList.innerHTML = '';
+    readEduJson(card).forEach(e=>addEducationEntry(e));
+
+    const workList = document.getElementById('ed-work-list');
+    workList.innerHTML = '';
+    readWorkJson(card).forEach(w=>addWorkEntry(w));
+
+    document.getElementById('pb-edit-modal-overlay').classList.add('open');
+  }
+
+  function closeEditModal(){
+    document.getElementById('pb-edit-modal-overlay').classList.remove('open');
+    editingCard = null;
+  }
+
+  function saveEditModal(){
+    const card = editingCard;
+    if(!card) return;
+
+    card.querySelector('.profile-name').textContent = document.getElementById('ed-name').value.trim() || 'Unnamed';
+    const relation = document.getElementById('ed-relation').value.trim();
+    const badge = card.querySelector('.rel-badge');
+    badge.textContent = relation || 'Family Member';
+    badge.className = 'rel-badge ' + relationBadgeClass(relation);
+
+    setField(card, 'Date of birth', document.getElementById('ed-dob').value);
+    setField(card, 'Death date', document.getElementById('ed-death').value);
+    setField(card, 'NRC number', document.getElementById('ed-nrc').value);
+    setField(card, 'Spouse', document.getElementById('ed-spouse').value);
+    setField(card, 'Father', document.getElementById('ed-father').value);
+    setField(card, 'Mother', document.getElementById('ed-mother').value);
+    setField(card, 'Passport no.', document.getElementById('ed-passport').value);
+    setField(card, 'Ethnicity', document.getElementById('ed-ethnicity').value);
+    setField(card, 'Religion', document.getElementById('ed-religion').value);
+    setField(card, 'Languages', document.getElementById('ed-languages').value);
+    setField(card, 'Birth place', document.getElementById('ed-birthplace').value);
+    setField(card, 'Gender', document.getElementById('ed-gender').value);
+    setField(card, 'Marital status', document.getElementById('ed-marital').value);
+    setField(card, 'Blood type', document.getElementById('ed-blood').value);
+    setField(card, 'Phone no.', document.getElementById('ed-phone').value);
+    setField(card, 'Email', document.getElementById('ed-email').value);
+    setField(card, 'Height', document.getElementById('ed-height').value);
+    setField(card, 'Weight', document.getElementById('ed-weight').value);
+    setField(card, 'Address', document.getElementById('ed-address').value);
+    setField(card, 'Note', document.getElementById('ed-note').value);
+
+    const eduEntries = [...document.querySelectorAll('#ed-education-list .edu-entry')].map(row=>({
+      school: row.querySelector('.edu-school').value.trim(),
+      years: row.querySelector('.edu-years').value.trim(),
+      grad: row.querySelector('.edu-grad').value.trim()
+    })).filter(e=>e.school || e.years || e.grad);
+    const workEntries = [...document.querySelectorAll('#ed-work-list .work-entry')].map(row=>({
+      company: row.querySelector('.work-company').value.trim(),
+      position: row.querySelector('.work-position').value.trim(),
+      start: row.querySelector('.work-start').value.trim(),
+      income: row.querySelector('.work-income').value.trim()
+    })).filter(w=>w.company || w.position || w.start || w.income);
+
+    card.dataset.edu = JSON.stringify(eduEntries);
+    card.dataset.work = JSON.stringify(workEntries);
+
+    const eduMini = card.querySelector('.mini-val[data-key="education"]');
+    eduMini.textContent = eduEntries.length ? (eduEntries[0].grad || eduEntries[0].school || '\u00A0') : '\u00A0';
+    const workMini = card.querySelector('.mini-val[data-key="work"]');
+    workMini.textContent = workEntries.length ? (workEntries[0].position || workEntries[0].company || '\u00A0') : '\u00A0';
+
+    closeEditModal();
+    updatePbCount();
+    updatePbHeader();
+  }
+
+  // ---- profiles: keep mini-row + full-detail fields in sync ----
+  function wireMiniSyncForCard(card){
+    card.querySelectorAll('[data-key]').forEach(source=>{
+      const key = source.dataset.key;
+      source.addEventListener('input', ()=>{
+        card.querySelectorAll(`[data-key="${key}"]`).forEach(target=>{
+          if(target !== source) target.textContent = source.textContent;
+        });
+      });
+    });
+  }
+  function wireMiniSync(){
+    document.querySelectorAll('.profile-card').forEach(wireMiniSyncForCard);
+  }
+
+  // ---- profiles: live search across all card text ----
+  function filterProfiles(){
+    const q = document.getElementById('pb-search').value.trim().toLowerCase();
+    const cards = document.querySelectorAll('#profiles-grid .profile-card');
+    let visible = 0;
+    cards.forEach(card=>{
+      const match = !q || card.textContent.toLowerCase().includes(q);
+      card.style.display = match ? '' : 'none';
+      if(match) visible++;
+    });
+    document.getElementById('pb-count').textContent = `${visible} record${visible===1?'':'s'}`;
+  }
+  function updatePbCount(){ filterProfiles(); }
+
+  // ---- profiles: header logo/subtitle/last-updated ----
+  function updatePbHeader(){
+    const famField = document.querySelector('.family-name-field');
+    const famName = famField ? famField.textContent.trim() : '';
+    const logo = document.getElementById('pb-logo');
+    const subtitle = document.getElementById('pb-subtitle');
+    if(famName){
+      const initials = famName.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      logo.textContent = initials || 'FB';
+      subtitle.textContent = `${famName.toUpperCase()} FAMILY`;
+    } else {
+      logo.textContent = 'FB';
+      subtitle.textContent = 'Family Profiles';
+    }
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    document.getElementById('pb-updated').textContent = `Last updated: ${dateStr}`;
+
+    const ftLine = document.getElementById('ft-subtitle-line');
+    if(ftLine){
+      ftLine.textContent = famName
+        ? `${famName.toUpperCase()} FAMILY — built automatically from the Profiles tab. Click a person to view their full record.`
+        : `Built automatically from the Profiles tab, using each person's Father, Mother, and Spouse fields. Click a person to view their full record.`;
+    }
+  }
+
+  // ---- profiles: View modal ----
+  let pbModalCard = null;
+
+  function fieldText(el){
+    return (el.textContent || '').replace(/\u00A0/g,'').trim();
+  }
+
+  function formatEduWorkBlock(text){
+    // "Institution — Degree (Date range)"  or  "Title — Subtitle"
+    let title = text, sub = '', meta = '';
+    const dashParts = text.split(/\s+—\s+/);
+    if(dashParts.length > 1){
+      title = dashParts[0].trim();
+      let rest = dashParts.slice(1).join(' — ').trim();
+      const parenMatch = rest.match(/\(([^)]+)\)\s*$/);
+      if(parenMatch){
+        meta = parenMatch[1].trim();
+        rest = rest.replace(/\([^)]+\)\s*$/, '').trim();
+      }
+      sub = rest;
+    }
+    return { title, sub, meta };
+  }
+
+  function openProfileModal(btn){
+    const card = btn.closest('.profile-card');
+    pbModalCard = card;
+
+    const name = fieldText(card.querySelector('.profile-name')) || 'Unnamed';
+    const badge = card.querySelector('.rel-badge');
+    const relText = fieldText(badge) || 'Family Member';
+    document.getElementById('pb-modal-name').textContent = name;
+    document.getElementById('pb-modal-rel').textContent = relText;
+
+    // top accent bar picks up the badge color
+    const badgeColor = badge ? getComputedStyle(badge).backgroundColor : '';
+    if(badgeColor) document.querySelector('.pb-modal').style.borderTopColor = badgeColor;
+
+    const body = document.getElementById('pb-modal-body');
+    body.innerHTML = '';
+
+    let noteVal = '';
+    const plainRows = [];
+
+    card.querySelectorAll('.profile-fields .field-block').forEach(fb=>{
+      const label = fieldText(fb.querySelector('label'));
+      const value = fieldText(fb.querySelector('[contenteditable]'));
+      if(!value) return;
+      if(label.toLowerCase() === 'note') noteVal = value;
+      else plainRows.push({ label, value });
+    });
+
+    plainRows.forEach(row=>{
+      const div = document.createElement('div');
+      div.className = 'pb-row';
+      div.innerHTML = `<div class="pb-row-label">${row.label}</div><div class="pb-row-value">${row.value}</div>`;
+      body.appendChild(div);
+    });
+
+    const eduEntries = readEduJson(card);
+    if(eduEntries.length){
+      const heading = document.createElement('div');
+      heading.className = 'pb-section-heading';
+      heading.textContent = 'EDUCATION';
+      body.appendChild(heading);
+      eduEntries.forEach(e=>{
+        const block = document.createElement('div');
+        block.className = 'pb-block';
+        block.innerHTML = `
+          <div class="pb-block-title">${e.school || 'Untitled'}</div>
+          ${e.grad ? `<div class="pb-block-sub">${e.grad}</div>` : ''}
+          ${e.years ? `<div class="pb-block-meta">${e.years}</div>` : ''}`;
+        body.appendChild(block);
+      });
+    }
+
+    const workEntries = readWorkJson(card);
+    if(workEntries.length){
+      const heading = document.createElement('div');
+      heading.className = 'pb-section-heading';
+      heading.textContent = 'WORK';
+      body.appendChild(heading);
+      workEntries.forEach(w=>{
+        const metaParts = [w.start, w.income].filter(Boolean).join(' · ');
+        const block = document.createElement('div');
+        block.className = 'pb-block';
+        block.innerHTML = `
+          <div class="pb-block-title">${w.company || 'Untitled'}</div>
+          ${w.position ? `<div class="pb-block-sub">${w.position}</div>` : ''}
+          ${metaParts ? `<div class="pb-block-meta">${metaParts}</div>` : ''}`;
+        body.appendChild(block);
+      });
+    }
+
+    if(noteVal){
+      const heading = document.createElement('div');
+      heading.className = 'pb-section-heading';
+      heading.textContent = 'NOTE';
+      body.appendChild(heading);
+      const block = document.createElement('div');
+      block.className = 'pb-block plain';
+      block.textContent = noteVal;
+      body.appendChild(block);
+    }
+
+    document.getElementById('pb-modal-overlay').classList.add('open');
+  }
+
+  function closeProfileModal(){
+    document.getElementById('pb-modal-overlay').classList.remove('open');
+    pbModalCard = null;
+  }
+
+  document.getElementById('pb-modal-edit').addEventListener('click', ()=>{
+    if(!pbModalCard) return;
+    const card = pbModalCard;
+    closeProfileModal();
+    openEditModal(card);
+  });
+  document.getElementById('pb-modal-delete').addEventListener('click', ()=>{
+    if(!pbModalCard) return;
+    const card = pbModalCard;
+    closeProfileModal();
+    removeProfile(card.querySelector('.pb-card-btn.delete'));
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape'){ closeProfileModal(); closeEditModal(); }
+  });
+
+  // ---- FAMILY TREE ENGINE (auto-built from Profiles) ----
+  let ftZoom = 1;
+  let ftMode = 'classic';
+  let ftUnits = [];
+
+  function ftInitials(name){
+    return (name||'').trim().split(/\s+/).map(w=>w[0]).filter(Boolean).slice(0,2).join('').toUpperCase() || '?';
+  }
+
+  function relationColor(relation){
+    const key = (relation||'').trim().toLowerCase();
+    const map = {
+      'myself':'#7A2140','father':'#211C16','mother':'#8C2350',
+      'brother':'#1F4B43','sister':'#8B6A2F',
+      'spouse':'#3A5A8C','husband':'#3A5A8C','wife':'#3A5A8C',
+      'son':'#2F4A78','daughter':'#7B3F8C',
+      'grandfather':'#4A3B28','grandmother':'#6B2C57',
+      'father-in-law':'#3E3226','mother-in-law':'#6E3350',
+      'brother-in-law':'#1F6E64','sister-in-law':'#9C8A2E',
+      'uncle':'#6E5A2E','aunt':'#A65A6E',
+      'nephew':'#4C7A96','niece':'#5A88A6','cousin':'#5A6E4C'
+    };
+    return map[key] || '#5B5578';
+  }
+
+  function ftGetRecords(){
+    ensureCardIds();
+    return [...document.querySelectorAll('#profiles-grid .profile-card')].map(card=>({
+      id: card.dataset.id,
+      name: fieldText(card.querySelector('.profile-name')) || 'Unnamed',
+      relation: fieldText(card.querySelector('.rel-badge')) || 'Family Member',
+      father: getField(card,'Father'),
+      mother: getField(card,'Mother'),
+      spouse: getField(card,'Spouse'),
+      photo: extractPhotoDataUrl(card),
+      el: card
+    }));
+  }
+
+  function ftComputeGenerations(records){
+    const byName = {};
+    records.forEach(r=>{ if(r.name) byName[r.name.trim().toLowerCase()] = r; });
+    function lookup(n){ return n ? byName[n.trim().toLowerCase()] : null; }
+
+    // Anyone who is listed as *someone's* Father/Mother is a real anchor point
+    // of the tree. If that anchor's own Father/Mother fields are blank AND we
+    // can't otherwise place them, they're the top of a known lineage ->
+    // generation 0. This must be the LOWEST-priority rule: a person's own
+    // blood chain, or their spouse's already-known generation, always wins.
+    // Getting that priority backwards was itself a bug — a spouse with no
+    // parents on file but WITH a child recorded would get wrongly promoted to
+    // generation 0 the instant that child existed (having a child makes them
+    // "referenced as a parent"), even though their spouse's generation was
+    // already known and should have been inherited instead.
+    const rootNames = new Set();
+    records.forEach(r=>{
+      if(r.father) rootNames.add(r.father.trim().toLowerCase());
+      if(r.mother) rootNames.add(r.mother.trim().toLowerCase());
+    });
+
+    // Seed TRUE roots only: blank parent fields, referenced as someone's
+    // parent, AND their spouse (if any) has no blood trail either — meaning
+    // nobody in the pair can be placed any other way. If the spouse DOES have
+    // known parents, skip seeding and let spousal inheritance (below) handle
+    // it once the spouse's own generation is resolved.
+    records.forEach(r=>{
+      const fName = (r.father||'').trim(), mName = (r.mother||'').trim();
+      if(fName || mName) return;
+      if(!rootNames.has(r.name.trim().toLowerCase())) return;
+      const sp = lookup(r.spouse);
+      const spHasBlood = sp && ((sp.father||'').trim() || (sp.mother||'').trim());
+      if(spHasBlood) return;
+      r.gen = 0;
+    });
+
+    // Iteratively resolve everyone else via blood and spouse links together,
+    // giving both an equal chance each round so neither locks in an answer
+    // before the other has had a chance to contribute.
+    for(let round=0; round<records.length+2; round++){
+      let changed = false;
+      records.forEach(r=>{
+        if(r.gen !== undefined) return;
+        const f = lookup(r.father), m = lookup(r.mother);
+        let g = null;
+        if(f && f.gen !== undefined) g = f.gen + 1;
+        if(m && m.gen !== undefined) g = (g===null) ? m.gen+1 : Math.max(g, m.gen+1);
+        if(g === null){
+          const sp = lookup(r.spouse);
+          if(sp && sp.gen !== undefined) g = sp.gen;
+        }
+        if(g !== null){ r.gen = g; changed = true; }
+      });
+      if(!changed) break;
+    }
+
+    // Last resort: blank-parent anchor for anyone still unplaced (e.g. a
+    // spouse whose own partner's generation never resolved either).
+    records.forEach(r=>{
+      if(r.gen === undefined){
+        const fName = (r.father||'').trim(), mName = (r.mother||'').trim();
+        if(!fName && !mName && rootNames.has(r.name.trim().toLowerCase())) r.gen = 0;
+      }
+    });
+
+    records.forEach(r=>{
+      if(r.gen===undefined){
+        const rel = (r.relation||'').toLowerCase();
+        if(rel.includes('grand')) r.gen = 0;
+        else if(rel==='father' || rel==='mother' || rel.includes('father-in-law') || rel.includes('mother-in-law')) r.gen = 1;
+        else if(rel.includes('son') || rel.includes('daughter') || rel.includes('nephew') || rel.includes('niece')) r.gen = 3;
+        else r.gen = 2;
+      }
+    });
+    return records;
+  }
+
+  function ftBuildUnits(records){
+    const byName = {};
+    records.forEach(r=>{ byName[r.name.trim().toLowerCase()] = r; });
+    const used = new Set();
+    const gens = {};
+    records.forEach(r=>{ (gens[r.gen] = gens[r.gen] || []).push(r); });
+
+    const units = [];
+    Object.keys(gens).map(Number).sort((a,b)=>a-b).forEach(g=>{
+      gens[g].forEach(r=>{
+        if(used.has(r.id)) return;
+        const sp = byName[(r.spouse||'').trim().toLowerCase()];
+        const members = [r];
+        used.add(r.id);
+        if(sp && sp.gen===r.gen && !used.has(sp.id)){
+          members.push(sp);
+          used.add(sp.id);
+        }
+        units.push({ gen:g, members });
+      });
+    });
+    return units;
+  }
+
+  function ftAttachChildren(units){
+    const all = units.flatMap(u=>u.members);
+    units.forEach(u=>{
+      const names = u.members.map(m=>m.name.trim().toLowerCase());
+      u.children = all.filter(r=>{
+        const f = (r.father||'').trim().toLowerCase(), m = (r.mother||'').trim().toLowerCase();
+        return (f && names.includes(f)) || (m && names.includes(m));
+      });
+    });
+  }
+
+  // Reorders units within each generation row so that children units sit
+  // horizontally near their own parent unit (instead of raw profile order),
+  // producing the "child directly under parent" layout.
+  function ftAssignColumnOrder(units, records){
+    const byName = {};
+    records.forEach(r=>{ byName[r.name.trim().toLowerCase()] = r; });
+    const unitByRecordId = new Map();
+    units.forEach(u=> u.members.forEach(m=> unitByRecordId.set(m.id, u)));
+
+    const gensSorted = [...new Set(units.map(u=>u.gen))].sort((a,b)=>a-b);
+    gensSorted.forEach(g=>{
+      const rowUnits = units.filter(u=>u.gen===g);
+      rowUnits.forEach(u=>{
+        let parentUnit = null;
+        for(const m of u.members){
+          const f = byName[(m.father||'').trim().toLowerCase()];
+          const mo = byName[(m.mother||'').trim().toLowerCase()];
+          const fu = f && unitByRecordId.get(f.id);
+          const mu = mo && unitByRecordId.get(mo.id);
+          if(fu && fu.orderKey !== undefined){ parentUnit = fu; break; }
+          if(mu && mu.orderKey !== undefined){ parentUnit = mu; break; }
+        }
+        u.parentUnit = parentUnit;
+      });
+      rowUnits.sort((a,b)=>{
+        const aKey = a.parentUnit ? a.parentUnit.orderKey : -1;
+        const bKey = b.parentUnit ? b.parentUnit.orderKey : -1;
+        if(aKey !== bKey) return aKey - bKey;
+        return a.sortKey - b.sortKey;
+      });
+      rowUnits.forEach((u,i)=>{ u.orderKey = i; });
+    });
+  }
+
+  function ftBuildNode(m){
+    const node = document.createElement('div');
+    node.className = 'ft-node';
+    const color = relationColor(m.relation);
+    const avatarStyle = m.photo
+      ? `background-color:${color};background-image:url('${m.photo}');background-size:cover;background-position:center;`
+      : `background-color:${color};`;
+    const avatarInner = m.photo ? '' : `<span>${ftInitials(m.name)}</span>`;
+    node.innerHTML = `
+      <div class="ft-avatar" style="${avatarStyle}">${avatarInner}</div>
+      <div class="ft-name">${escapeAttr(m.name)}</div>
+      <div class="ft-rel" style="color:${color}">${escapeAttr(m.relation)}</div>`;
+    node.addEventListener('click', ()=>{
+      const viewBtn = m.el.querySelector('.pb-card-btn.view');
+      if(viewBtn) openProfileModal(viewBtn);
+    });
+    return node;
+  }
+
+  function ftRenderLegend(records){
+    const legend = document.getElementById('ft-legend');
+    if(!legend) return;
+    legend.innerHTML = '';
+    const seen = new Map();
+    records.forEach(r=>{
+      const label = (r.relation||'').trim();
+      if(label && !seen.has(label.toLowerCase())) seen.set(label.toLowerCase(), label);
+    });
+    seen.forEach(label=>{
+      const item = document.createElement('div');
+      item.className = 'ft-legend-item';
+      item.innerHTML = `<span class="ft-legend-swatch" style="background:${relationColor(label)}"></span>${escapeAttr(label)}`;
+      legend.appendChild(item);
+    });
+  }
+
+  function ftRenderTree(){
+    const container = document.getElementById('ft-canvas');
+    if(!container) return;
+    const records = ftGetRecords();
+    ftRenderLegend(records);
+
+    container.innerHTML = '';
+    if(!records.length){
+      container.innerHTML = '<div class="ft-empty">Add family members in the Profiles tab to see them appear here.</div>';
+      ftUnits = [];
+      return;
+    }
+
+    ftComputeGenerations(records);
+    const units = ftBuildUnits(records);
+    ftAttachChildren(units);
+    ftUnits = units;
+
+    const indexMap = new Map(records.map((r,i)=>[r.id,i]));
+    units.forEach(u=>{ u.sortKey = Math.min(...u.members.map(m=>indexMap.get(m.id))); });
+
+    ftAssignColumnOrder(units, records);
+
+    const gensPresent = [...new Set(units.map(u=>u.gen))].sort((a,b)=>a-b);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'ft-wrapper' + (ftMode==='cards' ? ' ft-cards-mode' : '');
+    wrapper.style.transform = `scale(${ftZoom})`;
+    container.appendChild(wrapper);
+
+    gensPresent.forEach(g=>{
+      const rowUnits = units.filter(u=>u.gen===g).sort((a,b)=>a.orderKey-b.orderKey);
+      const row = document.createElement('div');
+      row.className = 'ft-row';
+      rowUnits.forEach(u=>{
+        const unitEl = document.createElement('div');
+        unitEl.className = 'ft-unit';
+        u.members.forEach(m=>{ m.nodeEl = ftBuildNode(m); });
+        if(u.members.length === 2){
+          unitEl.appendChild(u.members[0].nodeEl);
+          const link = document.createElement('div');
+          link.className = 'ft-spouse-link';
+          unitEl.appendChild(link);
+          unitEl.appendChild(u.members[1].nodeEl);
+        } else {
+          unitEl.appendChild(u.members[0].nodeEl);
+        }
+        row.appendChild(unitEl);
+      });
+      wrapper.appendChild(row);
+    });
+
+    requestAnimationFrame(()=> ftDrawConnectors(wrapper, units));
+  }
+
+  function ftDrawConnectors(wrapper, units){
+    if(!wrapper || !wrapper.isConnected) return;
+    const svgNS = 'http://www.w3.org/2000/svg';
+    let svg = wrapper.querySelector('svg.ft-lines');
+    if(!svg){
+      svg = document.createElementNS(svgNS,'svg');
+      svg.setAttribute('class','ft-lines');
+      wrapper.insertBefore(svg, wrapper.firstChild);
+    }
+    svg.innerHTML = '';
+    const w = wrapper.scrollWidth, h = wrapper.scrollHeight;
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+    svg.style.width = w + 'px';
+    svg.style.height = h + 'px';
+
+    const wrapRect = wrapper.getBoundingClientRect();
+    const scale = ftZoom || 1;
+    function ptOf(el){
+      const r = el.getBoundingClientRect();
+      return {
+        left: (r.left - wrapRect.left) / scale,
+        top: (r.top - wrapRect.top) / scale,
+        bottom: (r.bottom - wrapRect.top) / scale,
+        cx: (r.left - wrapRect.left) / scale + (r.width / scale) / 2
+      };
+    }
+    function addLine(x1,y1,x2,y2){
+      const line = document.createElementNS(svgNS,'line');
+      line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+      line.setAttribute('stroke','#B7AFA0');
+      line.setAttribute('stroke-opacity','0.9');
+      line.setAttribute('stroke-width','1.5');
+      line.setAttribute('stroke-linecap','square');
+      svg.appendChild(line);
+    }
+
+    units.forEach(u=>{
+      if(!u.children || !u.children.length) return;
+      const parentNodes = u.members.map(m=>m.nodeEl).filter(Boolean);
+      if(!parentNodes.length) return;
+      // Center (cx) comes from the avatar circle, but the line's start point
+      // must clear the whole node — avatar + name + relation label — or the
+      // short vertical segment ends up drawn straight through that text.
+      const parentAvatarPts = parentNodes.map(n=>ptOf(n.querySelector('.ft-avatar')));
+      const parentNodePts = parentNodes.map(ptOf);
+      const parentCX = parentAvatarPts.length===2 ? (parentAvatarPts[0].cx+parentAvatarPts[1].cx)/2 : parentAvatarPts[0].cx;
+      const parentBottom = Math.max(...parentNodePts.map(p=>p.bottom)) + 4;
+
+      const childAvatars = u.children.map(c=>c.nodeEl && c.nodeEl.querySelector('.ft-avatar')).filter(Boolean);
+      if(!childAvatars.length) return;
+      const childPts = childAvatars.map(ptOf);
+      const childTop = Math.min(...childPts.map(p=>p.top));
+      if(childTop <= parentBottom) return;
+      const busY = parentBottom + Math.max(14, (childTop - parentBottom) * 0.42);
+
+      addLine(parentCX, parentBottom, parentCX, busY);
+      const xs = childPts.map(p=>p.cx).concat([parentCX]);
+      addLine(Math.min(...xs), busY, Math.max(...xs), busY);
+      childPts.forEach(p=> addLine(p.cx, busY, p.cx, p.top));
+    });
+  }
+
+  function ftSetMode(mode){
+    ftMode = mode;
+    document.querySelectorAll('.ft-mode-btn').forEach(b=> b.classList.toggle('active', b.dataset.mode===mode));
+    ftRenderTree();
+  }
+
+  function ftSetZoom(z){
+    ftZoom = Math.min(1.5, Math.max(0.3, Math.round(z*20)/20));
+    const wrapper = document.querySelector('#ft-canvas .ft-wrapper');
+    if(wrapper) wrapper.style.transform = `scale(${ftZoom})`;
+    const pct = document.getElementById('ft-zoom-pct');
+    if(pct) pct.textContent = Math.round(ftZoom*100) + '%';
+  }
+
+  function ftFitScreen(){
+    const outer = document.getElementById('ft-canvas');
+    const wrapper = outer && outer.querySelector('.ft-wrapper');
+    if(!outer || !wrapper) return;
+    ftZoom = 1;
+    wrapper.style.transform = 'scale(1)';
+    const availableWidth = outer.clientWidth - 40;
+    const naturalWidth = wrapper.scrollWidth;
+    const z = naturalWidth ? Math.min(1, availableWidth / naturalWidth) : 1;
+    ftSetZoom(z);
+    requestAnimationFrame(()=> ftDrawConnectors(wrapper, ftUnits));
+  }
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(()=>{
+      const wrapper = document.querySelector('#ft-canvas .ft-wrapper');
+      if(wrapper) ftDrawConnectors(wrapper, ftUnits);
+    });
+  }
+
+  // ---- Google Sheet sync ----
+  const SHEET_HEADERS = ['id','name','relation','dob','death','age','birthplace','nrc','passport',
+    'ethnicity','religion','languages','gender','marital','blood','phone','email','height','weight',
+    'father','mother','spouse','address','note','education','work','photo'];
+
+  function genId(){
+    return 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8);
+  }
+
+  function ensureCardIds(){
+    document.querySelectorAll('#profiles-grid .profile-card').forEach(c=>{
+      if(!c.dataset.id) c.dataset.id = genId();
+    });
+  }
+
+  function extractPhotoDataUrl(card){
+    const avatarEl = card.querySelector('.profile-avatar');
+    if(!avatarEl) return '';
+    const bg = avatarEl.style.backgroundImage;
+    if(!bg || bg === 'none') return '';
+    const match = bg.match(/^url\((["']?)(.*)\1\)$/);
+    return match ? match[2] : '';
+  }
+
+  function cardToRecord(card){
+    if(!card.dataset.id) card.dataset.id = genId();
+    return {
+      id: card.dataset.id,
+      name: fieldText(card.querySelector('.profile-name')),
+      relation: fieldText(card.querySelector('.rel-badge')),
+      dob: getField(card,'Date of birth'),
+      death: getField(card,'Death date'),
+      age: getField(card,'Age'),
+      birthplace: getField(card,'Birth place'),
+      nrc: getField(card,'NRC number'),
+      passport: getField(card,'Passport no.'),
+      ethnicity: getField(card,'Ethnicity'),
+      religion: getField(card,'Religion'),
+      languages: getField(card,'Languages'),
+      gender: getField(card,'Gender'),
+      marital: getField(card,'Marital status'),
+      blood: getField(card,'Blood type'),
+      phone: getField(card,'Phone no.'),
+      email: getField(card,'Email'),
+      height: getField(card,'Height'),
+      weight: getField(card,'Weight'),
+      father: getField(card,'Father'),
+      mother: getField(card,'Mother'),
+      spouse: getField(card,'Spouse'),
+      address: getField(card,'Address'),
+      note: getField(card,'Note'),
+      education: card.dataset.edu || '[]',
+      work: card.dataset.work || '[]',
+      photo: extractPhotoDataUrl(card)
+    };
+  }
+
+  function collectAllRecords(){
+    return [...document.querySelectorAll('#profiles-grid .profile-card')].map(cardToRecord);
+  }
+
+  function buildCardFromRecord(rec){
+    const card = document.createElement('div');
+    card.className = 'profile-card';
+    card.dataset.id = rec.id || genId();
+    card.dataset.edu = rec.education || '[]';
+    card.dataset.work = rec.work || '[]';
+    const relation = rec.relation || 'Family Member';
+    const initials = (rec.name||'').split(/\s+/).map(w=>w[0]).filter(Boolean).slice(0,2).join('').toUpperCase() || '＋';
+
+    let eduEntries = [], workEntries = [];
+    try{ eduEntries = JSON.parse(rec.education||'[]'); }catch(e){}
+    try{ workEntries = JSON.parse(rec.work||'[]'); }catch(e){}
+    const eduMini = eduEntries.length ? (eduEntries[0].grad || eduEntries[0].school || '') : '';
+    const workMini = workEntries.length ? (workEntries[0].position || workEntries[0].company || '') : '';
+
+    const fr = (label,value)=>`<div class="field-block"><label>${label}</label><div contenteditable="false">${value && value.trim() ? value : '&nbsp;'}</div></div>`;
+    const frFull = (label,value)=>`<div class="field-block full"><label>${label}</label><div contenteditable="false">${value && value.trim() ? value : '&nbsp;'}</div></div>`;
+
+    card.innerHTML = `
+      <span class="rel-badge ${relationBadgeClass(relation)}" contenteditable="true">${relation}</span>
+      <div class="profile-top">
+        <div class="profile-avatar-wrap"><div class="profile-avatar" style="background-color:var(--pb-muted)" onclick="toggleAvatarMenu(event,this)">${initials}</div><input type="file" accept="image/*" class="avatar-file-input" onchange="setPhoto(event,this)"><button type="button" class="avatar-cam-btn" onclick="toggleAvatarMenu(event,this)" title="Change profile photo">📷</button><div class="avatar-menu"><button type="button" class="avatar-menu-upload" onclick="chooseAvatarPhoto(this)">Upload photo</button><button type="button" class="avatar-menu-remove" onclick="removeAvatarPhoto(this)">Remove photo</button></div></div>
+        <div>
+          <div class="profile-name" contenteditable="true">${rec.name || 'Unnamed'}</div>
+          <div class="profile-age" data-key="age" contenteditable="true">${rec.age && rec.age.trim() ? rec.age : '&nbsp;'}</div>
+        </div>
+      </div>
+      <div class="mini-fields">
+        <div class="mini-block"><label>Education</label><div class="mini-val" data-key="education">${eduMini || '&nbsp;'}</div></div>
+        <div class="mini-block"><label>Work</label><div class="mini-val" data-key="work">${workMini || '&nbsp;'}</div></div>
+      </div>
+      <div class="card-actions">
+        <button class="pb-card-btn view" onclick="openProfileModal(this)">View</button>
+        <button class="pb-card-btn edit" onclick="openEditModal(this)">Edit</button>
+        <button class="pb-card-btn delete" onclick="removeProfile(this)">Delete</button>
+      </div>
+      <div class="profile-fields">
+        ${fr('Date of birth', rec.dob)}
+        ${fr('Death date', rec.death)}
+        <div class="field-block"><label>Age</label><div contenteditable="true" data-key="age">${rec.age && rec.age.trim() ? rec.age : '&nbsp;'}</div></div>
+        ${fr('Birth place', rec.birthplace)}
+        ${fr('NRC number', rec.nrc)}
+        ${fr('Passport no.', rec.passport)}
+        ${fr('Ethnicity', rec.ethnicity)}
+        ${fr('Religion', rec.religion)}
+        ${fr('Languages', rec.languages)}
+        ${fr('Gender', rec.gender)}
+        ${fr('Marital status', rec.marital)}
+        ${fr('Blood type', rec.blood)}
+        ${fr('Phone no.', rec.phone)}
+        ${fr('Email', rec.email)}
+        ${fr('Height', rec.height)}
+        ${fr('Weight', rec.weight)}
+        ${fr('Father', rec.father)}
+        ${fr('Mother', rec.mother)}
+        ${fr('Spouse', rec.spouse)}
+        ${frFull('Address', rec.address)}
+        ${frFull('Note', rec.note)}
+      </div>`;
+    wireMiniSyncForCard(card);
+    if(rec.photo){
+      const avatarEl = card.querySelector('.profile-avatar');
+      if(avatarEl){
+        avatarEl.style.backgroundImage = `url(${rec.photo})`;
+        avatarEl.style.color = 'transparent';
+      }
+    }
+    return card;
+  }
+
+  function setSheetStatus(msg, cls){
+    const el = document.getElementById('pb-sheetsync-status');
+    el.textContent = msg;
+    el.className = 'pb-sheetsync-status' + (cls ? ' '+cls : '');
+  }
+
+  function getSheetUrl(){
+    return document.getElementById('pb-sheet-url').value.trim();
+  }
+
+  async function saveToSheet(){
+    const url = getSheetUrl();
+    if(!url){ setSheetStatus('Paste your Web App URL first.', 'err'); return; }
+    setSheetStatus('Saving…');
+    try{
+      const records = collectAllRecords();
+      const oversized = records.filter(r => r.photo && r.photo.length > 49000);
+      if(oversized.length){
+        oversized.forEach(r => { r.photo = ''; });
+        setSheetStatus(`Warning: ${oversized.length} photo${oversized.length===1?'':'s'} were too large for a sheet cell and were skipped. Saving the rest…`, 'err');
+      }
+      const res = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify({ action:'saveAll', records })
+      });
+      const data = await res.json();
+      if(data && data.status === 'ok'){
+        setSheetStatus(`Saved ${records.length} record${records.length===1?'':'s'} to your sheet — ${new Date().toLocaleTimeString()}`, 'ok');
+      } else {
+        setSheetStatus('Save finished, but the sheet returned an unexpected response.', 'err');
+      }
+    }catch(err){
+      setSheetStatus('Could not reach the sheet. Check the URL and deployment settings.', 'err');
+    }
+  }
+
+  async function loadFromSheet(){
+    const url = getSheetUrl();
+    if(!url){ setSheetStatus('Paste your Web App URL first.', 'err'); return; }
+    setSheetStatus('Loading…');
+    try{
+      const sep = url.includes('?') ? '&' : '?';
+      const res = await fetch(url + sep + 'action=list');
+      const data = await res.json();
+      const records = (data && data.records) || [];
+      const grid = document.getElementById('profiles-grid');
+      grid.innerHTML = '';
+      records.forEach(rec => grid.appendChild(buildCardFromRecord(rec)));
+      updatePbCount();
+      setSheetStatus(`Loaded ${records.length} record${records.length===1?'':'s'} from your sheet — ${new Date().toLocaleTimeString()}`, 'ok');
+    }catch(err){
+      setSheetStatus('Could not reach the sheet. Check the URL and deployment settings.', 'err');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    wireMiniSync();
+    populateRelationSelect();
+    ensureCardIds();
+    updatePbCount();
+    updatePbHeader();
+
+    // ---- auto-fill Sheet URL + auto-load on page open ----
+    const AUTO_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzbXGuaG0W4uwygSPKLQHXGAvSPTHsONnd5akrCpwd7wRvmwqKGDRtTDb26W8tRV4T6Gg/exec';
+    const sheetUrlInput = document.getElementById('pb-sheet-url');
+    if(sheetUrlInput){
+      sheetUrlInput.value = AUTO_SHEET_URL;
+      loadFromSheet();
+    }
+  });
+</script>
+
+</body>
+</html>
